@@ -8,6 +8,7 @@ __all__ = [
     # dialects
     'linuxcnc',
     'reprap',
+    'prusa',
 ]
 
 
@@ -18,9 +19,10 @@ from .mapping import word_dialect
 # Dialects
 from . import linuxcnc
 from . import reprap
+from . import prusa
 
 
-_DEFAULT = 'linuxcnc'
+_DEFAULT = 'prusa'
 
 
 def get_default():

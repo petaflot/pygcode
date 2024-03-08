@@ -508,22 +508,24 @@ class GCodeRigidTapping(GCodeMotion):
     param_letters = GCodeMotion.param_letters | set('K')
     word_key = Word('G', 33.1)
 
-
-class GCodeCancelCannedCycle(GCodeMotion):
-    """G80: Cancel Canned Cycle"""
-    word_key = Word('G', 80)
-    # Modal Group
-    #   Technically G80 belongs to the motion modal group, however it's often
-    #   expressed in the same line as another motion command.
-    #   This is alowed, but executed just prior to any other motion command
-    #       eg: G00 G80
-    #   will leave the machine in rapid motion mode
-    #   Just running G80 will leave machine with no motion mode.
-    modal_group = None
-    exec_order = 241
-
-    def _process(self, machine):
-        machine.mode.motion = None
+#
+# Conflicts with prusa command 
+#
+#class GCodeCancelCannedCycle(GCodeMotion):
+#    """G80: Cancel Canned Cycle"""
+#    word_key = Word('G', 80)
+#    # Modal Group
+#    #   Technically G80 belongs to the motion modal group, however it's often
+#    #   expressed in the same line as another motion command.
+#    #   This is alowed, but executed just prior to any other motion command
+#    #       eg: G00 G80
+#    #   will leave the machine in rapid motion mode
+#    #   Just running G80 will leave machine with no motion mode.
+#    modal_group = None
+#    exec_order = 241
+#
+#    def _process(self, machine):
+#        machine.mode.motion = None
 
 
 # ======================= Canned Cycles =======================
@@ -1299,6 +1301,7 @@ class GCodeSet(GCodeNonModal):
 
 class GCodeGotoPredefinedPosition(GCodeNonModal):
     """G28,G30: Goto Predefined Position (rapid movement)"""
+    param_letters = set('W')
     @classmethod
     def word_matches(cls, w):
         return (w.letter == 'G') and (w.value in [28, 30])
@@ -1308,6 +1311,7 @@ class GCodeGotoPredefinedPosition(GCodeNonModal):
 
 class GCodeSetPredefinedPosition(GCodeNonModal):
     """G28.1,G30.1: Set Predefined Position"""  # redundancy in language there, but I'll let it slide
+    param_letters = set('W')
     @classmethod
     def word_matches(cls, w):
         return (w.letter == 'G') and (w.value in [28.1, 30.1])
@@ -1356,6 +1360,115 @@ class GCodeUserDefined(GCodeNonModal):
     exec_order = 130
     modal_group = MODAL_GROUP_MAP['user_defined']
 
+# ======================= Prusa =======================
+# CODE              PARAMETERS          DESCRIPTION
+# M862.1            P Q                 Nozzle Diameter
+# M862.2            P Q                 Model Code
+# M862.3            P Q                 Model Name
+# M862.4            P Q                 Firmware Version
+# M862.5            P Q                 GCode Level
+# M115              V U                 Firmware info
+# M73               P R Q S C D         Set/Get print progress
+# M205              S T B X Y Z E       Set advanced settings
+# M104              S                   Set extruder temperature
+# M109              B R S               Wait for extruder temperature
+# M140              S                   Set bed temperature
+# M190              R S                 Wait for bed temperature
+# M204              S T                 Acceleration settings
+# M221              S T                 Set extrude factor override percentage
+# M106              S                   Set fan speed
+# G80               N R V L R F B       Mesh-based Z probe
+
+class GCodePrintChecking(GCode):
+    exec_order = 999
+    modal_group = MODAL_GROUP_MAP['user_defined']
+    param_letters = set('PQ')
+
+class GCodeNozzleDiameterPrintChecking(GCodePrintChecking):
+    """M862.1: Nozzle Diameter"""
+    word_key = Word('M', 862.1)
+
+class GCodeModelCodePrintChecking(GCodePrintChecking):
+    """M862.2: Model Code"""
+    word_key = Word('M', 862.2)
+
+class GCodeModelNamePrintChecking(GCodePrintChecking):
+    """M862.3: Model Name"""
+    word_key = Word('M', 862.3)
+
+class GCodeFirmwareVersionPrintChecking(GCodePrintChecking):
+    """M862.4: Firmware Version"""
+    word_key = Word('M', 862.4)
+
+class GCodeGcodeLevelPrintChecking(GCodePrintChecking):
+    """M862.5: Gcode Level"""
+    word_key = Word('M', 862.5)
+
+class GCodeFirmwareInfo(GCode):
+    exec_order = 999
+    modal_group = MODAL_GROUP_MAP['user_defined']
+    param_letters = set('VU')
+    word_key = Word('M', 115)
+
+class GCodePrintProgress(GCode):
+    exec_order = 999
+    modal_group = MODAL_GROUP_MAP['user_defined']
+    param_letters = set('PRQSCD')
+    word_key = Word('M', 73)
+
+class GCodeSetAdvancedSettings(GCode):
+    exec_order = 999
+    modal_group = MODAL_GROUP_MAP['user_defined']
+    param_letters = set('STBXYZE')
+    word_key = Word('M', 205)
+
+class GCodeSetExtruderTemperature(GCode):
+    exec_order = 999
+    modal_group = MODAL_GROUP_MAP['user_defined']
+    param_letters = set('S')
+    word_key = Word('M', 104)
+
+class GCodeWaitForExtruderTemperature(GCode):
+    exec_order = 999
+    modal_group = MODAL_GROUP_MAP['user_defined']
+    param_letters = set('BRS')
+    word_key = Word('M', 109)
+
+class GCodeSetBedTemperature(GCode):
+    exec_order = 999
+    modal_group = MODAL_GROUP_MAP['user_defined']
+    param_letters = set('S')
+    word_key = Word('M', 140)
+
+class GCodeWaitForBedTemperature(GCode):
+    exec_order = 999
+    modal_group = MODAL_GROUP_MAP['user_defined']
+    param_letters = set('RS')
+    word_key = Word('M', 190)
+
+class GCodeAccelerationSettings(GCode):
+    exec_order = 999
+    modal_group = MODAL_GROUP_MAP['user_defined']
+    param_letters = set('ST')
+    word_key = Word('M', 204)
+
+class GCodeSetExtrudeFactorOverridePercentage(GCode):
+    exec_order = 999
+    modal_group = MODAL_GROUP_MAP['user_defined']
+    param_letters = set('ST')
+    word_key = Word('M', 221)
+
+class GCodeSetFanSpeed(GCode):
+    exec_order = 999
+    modal_group = MODAL_GROUP_MAP['user_defined']
+    param_letters = set('S')
+    word_key = Word('M', 106)
+
+class GCodeMeshBasedZProbe(GCode):
+    exec_order = 999
+    modal_group = MODAL_GROUP_MAP['user_defined']
+    param_letters = set('NRVLRFB')
+    word_key = Word('G', 80)
 
 # ======================= Utilities =======================
 

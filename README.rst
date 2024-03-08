@@ -11,11 +11,7 @@ for python.
 Installation
 ============
 
-Install using ``pip``
-
-``pip install pygcode``
-
-or `download directly from PyPi <https://pypi.python.org/pypi/pygcode>`__
+python3 setup.py install
 
 
 Documentation
