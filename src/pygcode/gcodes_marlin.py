@@ -757,7 +757,7 @@ class GCodeWaitForProbeTemperature(GCode):
     dialects = ['marlin2']
     word_key = Word('M', 192)
 
-class GCodeSetLaserCoolerTemperatureAndWait(GCodeCoolant):
+class GCodeWaitForLaserCoolerTemperature(GCodeCoolant):
     """M193: Set a new target laser coolant temperature."""
     param_letters = "S"
     dialects = ['marlin2']

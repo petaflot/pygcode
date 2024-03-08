@@ -104,7 +104,7 @@
 < # TODO: duplicate class name SetLaserCoolerTemperature
 < class GCodeSetLaserCoolerTemperature(GCodeCoolant):
 ---
-> class GCodeSetLaserCoolerTemperatureAndWait(GCodeCoolant):
+> class GCodeWaitForLaserCoolerTemperature(GCodeCoolant):
 775c766
 < class GCodeSetFilamentDiameter(GCodeOtherModal):
 ---
