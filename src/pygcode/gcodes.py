@@ -32,7 +32,7 @@ from .exceptions import GCodeParameterError, GCodeWordStrError
 #
 #   Modal Groups:
 #       Only one mode of each modal group can be active. That is to say, a
-#       modal g-code can only change the sate of a previously set mode if
+#       modal g-code can only change the state of a previously set mode if
 #       they're in the same group.
 #       For example:
 #           G20 (mm), and G21 (inches) are in group 6
@@ -213,6 +213,14 @@ class GCode(object):
             word_str=word_str,
             parameters=param_str,
         )
+    
+    def __hash__(self):
+        """Hash representation of the gcode, for set and dictionary usage"""
+        try:
+            return hash(self.word_key)
+        except TypeError:
+            return hash(self.word_letter) # May also want to retrieve additional value info
+        
 
     def _default_word(self):
         if self.default_word:
@@ -509,8 +517,6 @@ class GCodeRigidTapping(GCodeMotion):
     """G33.1: Rigid Tapping"""
     param_letters = GCodeMotion.param_letters | set('K')
     word_key = Word('G', 33.1)
-
-
 
 
 # ======================= Canned Cycles =======================
@@ -1267,7 +1273,7 @@ class GCodeAnalogOutputImmediate(GCodeAnalogOutput):
 # G28, G28.1                            Go/Set Predefined Position
 # G30, G30.1                            Go/Set Predefined Position
 # G53                                   Move in Machine Coordinates
-# G92                                   Coordinate System Offset
+# G92               ABCXYZUVW           Coordinate System Offset
 # G92.1, G92.2                          Reset G92 Offsets
 # G92.3                                 Restore G92 Offsets
 # M101 - M199       P Q                 User Defined Commands
@@ -1301,6 +1307,7 @@ class GCodeSet(GCodeNonModal):
 
 class GCodeGotoPredefinedPosition(GCodeNonModal):
     """G28,G30: Goto Predefined Position (rapid movement)"""
+    param_letters = set('W')
     @classmethod
     def word_matches(cls, w):
         return (w.letter == 'G') and (w.value in [28, 30])
@@ -1310,6 +1317,7 @@ class GCodeGotoPredefinedPosition(GCodeNonModal):
 
 class GCodeSetPredefinedPosition(GCodeNonModal):
     """G28.1,G30.1: Set Predefined Position"""  # redundancy in language there, but I'll let it slide
+    param_letters = set('W')
     @classmethod
     def word_matches(cls, w):
         return (w.letter == 'G') and (w.value in [28.1, 30.1])
@@ -1325,6 +1333,7 @@ class GCodeMoveInMachineCoords(GCodeNonModal):
 
 class GCodeCoordSystemOffset(GCodeNonModal):
     """G92: Coordinate System Offset"""
+    param_letters = set('XYZABCUVW')
     word_key = Word('G', 92)
     exec_order = 230
 
@@ -1358,6 +1367,115 @@ class GCodeUserDefined(GCodeNonModal):
     exec_order = 130
     modal_group = MODAL_GROUP_MAP['user_defined']
 
+# ======================= Prusa =======================
+# CODE              PARAMETERS          DESCRIPTION
+# M862.1            P Q                 Nozzle Diameter
+# M862.2            P Q                 Model Code
+# M862.3            P Q                 Model Name
+# M862.4            P Q                 Firmware Version
+# M862.5            P Q                 GCode Level
+# M115              V U                 Firmware info
+# M73               P R Q S C D         Set/Get print progress
+# M205              S T B X Y Z E       Set advanced settings
+# M104              S                   Set extruder temperature
+# M109              B R S               Wait for extruder temperature
+# M140              S                   Set bed temperature
+# M190              R S                 Wait for bed temperature
+# M204              S T                 Acceleration settings
+# M221              S T                 Set extrude factor override percentage
+# M106              S                   Set fan speed
+# G80               N R V L R F B       Mesh-based Z probe
+
+class GCodePrintChecking(GCode):
+    exec_order = 999
+    modal_group = MODAL_GROUP_MAP['user_defined']
+    param_letters = set('PQ')
+
+class GCodeNozzleDiameterPrintChecking(GCodePrintChecking):
+    """M862.1: Nozzle Diameter"""
+    word_key = Word('M', 862.1)
+
+class GCodeModelCodePrintChecking(GCodePrintChecking):
+    """M862.2: Model Code"""
+    word_key = Word('M', 862.2)
+
+class GCodeModelNamePrintChecking(GCodePrintChecking):
+    """M862.3: Model Name"""
+    word_key = Word('M', 862.3)
+
+class GCodeFirmwareVersionPrintChecking(GCodePrintChecking):
+    """M862.4: Firmware Version"""
+    word_key = Word('M', 862.4)
+
+class GCodeGcodeLevelPrintChecking(GCodePrintChecking):
+    """M862.5: Gcode Level"""
+    word_key = Word('M', 862.5)
+
+class GCodeFirmwareInfo(GCode):
+    exec_order = 999
+    modal_group = MODAL_GROUP_MAP['user_defined']
+    param_letters = set('VU')
+    word_key = Word('M', 115)
+
+class GCodePrintProgress(GCode):
+    exec_order = 999
+    modal_group = MODAL_GROUP_MAP['user_defined']
+    param_letters = set('PRQSCD')
+    word_key = Word('M', 73)
+
+class GCodeSetAdvancedSettings(GCode):
+    exec_order = 999
+    modal_group = MODAL_GROUP_MAP['user_defined']
+    param_letters = set('STBXYZE')
+    word_key = Word('M', 205)
+
+class GCodeSetExtruderTemperature(GCode):
+    exec_order = 999
+    modal_group = MODAL_GROUP_MAP['user_defined']
+    param_letters = set('S')
+    word_key = Word('M', 104)
+
+class GCodeWaitForExtruderTemperature(GCode):
+    exec_order = 999
+    modal_group = MODAL_GROUP_MAP['user_defined']
+    param_letters = set('BRS')
+    word_key = Word('M', 109)
+
+class GCodeSetBedTemperature(GCode):
+    exec_order = 999
+    modal_group = MODAL_GROUP_MAP['user_defined']
+    param_letters = set('S')
+    word_key = Word('M', 140)
+
+class GCodeWaitForBedTemperature(GCode):
+    exec_order = 999
+    modal_group = MODAL_GROUP_MAP['user_defined']
+    param_letters = set('RS')
+    word_key = Word('M', 190)
+
+class GCodeAccelerationSettings(GCode):
+    exec_order = 999
+    modal_group = MODAL_GROUP_MAP['user_defined']
+    param_letters = set('ST')
+    word_key = Word('M', 204)
+
+class GCodeSetExtrudeFactorOverridePercentage(GCode):
+    exec_order = 999
+    modal_group = MODAL_GROUP_MAP['user_defined']
+    param_letters = set('ST')
+    word_key = Word('M', 221)
+
+class GCodeSetFanSpeed(GCode):
+    exec_order = 999
+    modal_group = MODAL_GROUP_MAP['user_defined']
+    param_letters = set('S')
+    word_key = Word('M', 106)
+
+class GCodeMeshBasedZProbe(GCode):
+    exec_order = 999
+    modal_group = MODAL_GROUP_MAP['user_defined']
+    param_letters = set('NRVLRFB')
+    word_key = Word('G', 80)
 
 # ======================= Utilities =======================
 
