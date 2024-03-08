@@ -9,6 +9,7 @@ __all__ = [
     'linuxcnc',
     'reprap',
     'prusa',
+    'marlin2',
 ]
 
 
@@ -20,9 +21,10 @@ from .mapping import word_dialect
 from . import linuxcnc
 from . import reprap
 from . import prusa
+from . import marlin2
 
 
-_DEFAULT = 'prusa'
+_DEFAULT = 'marlin2'
 
 
 def get_default():
@@ -53,5 +55,6 @@ def set_default(name):
 
     """
 
-    # TODO: verify valid name
+    if name not in __all__:
+        raise ValueError(f"'{name}' is not a valid dialect")
     _DEFAULT = name
