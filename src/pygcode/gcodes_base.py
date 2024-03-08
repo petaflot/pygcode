@@ -1,3 +1,6 @@
+from .gcodes import MODAL_GROUP_MAP
+from .words import Word, text2words
+
 class GCode(object):
     # Defining Word
     word_key = None # Word instance to use in lookup

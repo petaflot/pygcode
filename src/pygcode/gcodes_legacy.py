@@ -1,4 +1,6 @@
 from .gcodes_base import *
+from .gcodes import DIALECT_UNKNOWN
+from .utils import Vector3, Quaternion, quat2coord_system
 
 # ======================= Motion =======================
 #   (X Y Z A B C U V W apply to all motions)

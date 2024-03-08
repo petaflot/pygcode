@@ -1,0 +1,137 @@
+100,104c100,104
+< class GCodeBedLevelingPointg1(GCodeMotion):
+<     """G29: Probe the bed and enable leveling compensation."""
+<     param_letters = "ACOQEDJV"
+<     dialects = ['marlin2']
+<     word_key = Word('G', 29)
+---
+> #class GCodeBedLevelingPointg1(GCodeMotion):
+> #    """G29: Probe the bed and enable leveling compensation."""
+> #    param_letters = "ACOQEDJV"
+> #    dialects = ['marlin2']
+> #    word_key = Word('G', 29)
+112,134c112,134
+< class GCodeBedLevelingLinearg2(GCodeMotion):
+<     """G29: Probe the bed and enable leveling compensation."""
+<     param_letters = "ACOQXYPSEDTHFBLRJV"
+<     dialects = ['marlin2']
+<     word_key = Word('G', 29)
+< 
+< class GCodeBedLevelingManualm1(GCodeMotion):
+<     """G29: Measure Z heights in a grid, enable leveling compensation"""
+<     param_letters = "SIJXYZ"
+<     dialects = ['marlin2']
+<     word_key = Word('G', 29)
+< 
+< class GCodeBedLeveling(GCodeMotion):
+<     """G29: Probe the bed and enable leveling compensation"""
+<     param_letters = ""
+<     dialects = ['marlin2']
+<     word_key = Word('G', 29)
+< 
+< class GCodeBedLevelingUnifiedm3(GCodeMotion):
+<     """G29: Probe the bed and enable leveling compensation."""
+<     param_letters = "ABCDEFHIJKLPQRSTUVWXY"
+<     dialects = ['marlin2']
+<     word_key = Word('G', 29)
+---
+> #class GCodeBedLevelingLinearg2(GCodeMotion):
+> #    """G29: Probe the bed and enable leveling compensation."""
+> #    param_letters = "ACOQXYPSEDTHFBLRJV"
+> #    dialects = ['marlin2']
+> #    word_key = Word('G', 29)
+> 
+> #class GCodeBedLevelingManualm1(GCodeMotion):
+> #    """G29: Measure Z heights in a grid, enable leveling compensation"""
+> #    param_letters = "SIJXYZ"
+> #    dialects = ['marlin2']
+> #    word_key = Word('G', 29)
+> 
+> #class GCodeBedLeveling(GCodeMotion):
+> #    """G29: Probe the bed and enable leveling compensation"""
+> #    param_letters = ""
+> #    dialects = ['marlin2']
+> #    word_key = Word('G', 29)
+> 
+> #class GCodeBedLevelingUnifiedm3(GCodeMotion):
+> #    """G29: Probe the bed and enable leveling compensation."""
+> #    param_letters = "ABCDEFHIJKLPQRSTUVWXY"
+> #    dialects = ['marlin2']
+> #    word_key = Word('G', 29)
+160,164c160,164
+< class GCodeMechanicalGantryCalibrationb(GCodeMotion):
+<     """G34: Modern replacement for Průša's TMC_Z_CALIBRATION"""
+<     param_letters = "SZ"
+<     dialects = ['marlin2']
+<     word_key = Word('G', 34)
+---
+> #class GCodeMechanicalGantryCalibrationb(GCodeMotion):
+> #    """G34: Modern replacement for Průša's TMC_Z_CALIBRATION"""
+> #    param_letters = "SZ"
+> #    dialects = ['marlin2']
+> #    word_key = Word('G', 34)
+425,432c425,426
+<     """M43: Get information about pins."""
+<     param_letters = "PWETSI"
+<     dialects = ['marlin2']
+<     word_key = Word('M', 43)
+< 
+< class GCodeTogglePinsb(GCodeDigitalOutput):
+<     """M43T: Get information about pins."""
+<     param_letters = "SLIRW"
+---
+>     """M43: Get information about pins / set pins"""
+>     param_letters = "PWETSIRL"
+652c646
+< class GCodeBaricudaOpen(GCodeDigitalOutput):
+---
+> class GCodeBaricuda1Open(GCodeDigitalOutput):
+658c652
+< class GCodeBaricudaClose(GCodeDigitalOutput):
+---
+> class GCodeBaricuda1Close(GCodeDigitalOutput):
+664,665c658
+< # TODO: duplicate class name BaricudaOpen
+< class GCodeBaricudaOpen(GCodeDigitalOutput):
+---
+> class GCodeBaricuda2Open(GCodeDigitalOutput):
+671,672c664
+< # TODO: duplicate class name BaricudaClose
+< class GCodeBaricudaClose(GCodeDigitalOutput):
+---
+> class GCodeBaricuda2Close(GCodeDigitalOutput):
+768,769c760
+< # TODO: duplicate class name SetLaserCoolerTemperature
+< class GCodeSetLaserCoolerTemperature(GCodeCoolant):
+---
+> class GCodeSetLaserCoolerTemperatureAndWait(GCodeCoolant):
+775c766
+< class GCodeSetFilamentDiameter(GCodeOtherModal):
+---
+> class GCodeSetFilamentDiameterVolumetric(GCodeOtherModal):
+1051d1041
+< # TODO: duplicate class name SetFilamentDiameter
+1250,1254c1240,1244
+< class GCodeDeltaConfiguration(GCodeOtherModal):
+<     """M665: Set delta geometry values"""
+<     param_letters = "HLRSXYZABC"
+<     dialects = ['marlin2']
+<     word_key = Word('M', 665)
+---
+> #class GCodeDeltaConfiguration(GCodeOtherModal):
+> #    """M665: Set delta geometry values"""
+> #    param_letters = "HLRSXYZABC"
+> #    dialects = ['marlin2']
+> #    word_key = Word('M', 665)
+1268,1272c1258,1262
+< class GCodeSetDeltaEndstopAdjustmentsa(GCodeOtherModal):
+<     """M666: Set Delta endstop adjustments"""
+<     param_letters = "XYZ"
+<     dialects = ['marlin2']
+<     word_key = Word('M', 666)
+---
+> #class GCodeSetDeltaEndstopAdjustmentsa(GCodeOtherModal):
+> #    """M666: Set Delta endstop adjustments"""
+> #    param_letters = "XYZ"
+> #    dialects = ['marlin2']
+> #    word_key = Word('M', 666)

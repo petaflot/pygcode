@@ -19,7 +19,6 @@ from .mapping import word_dialect
 
 # Dialects
 from . import linuxcnc
-from . import reprap
 from . import prusa
 from . import marlin2
 

@@ -4,12 +4,12 @@ from collections import defaultdict
 
 from .gcodes import (
     MODAL_GROUP_MAP, GCode,
-    # Modal GCodes
-    GCodeMotion,
-    GCodeIncrementalDistanceMode,
-    GCodeUseInches, GCodeUseMillimeters,
     # Utilities
     words2gcodes,
+)
+from .gcodes_base import (
+    # Modal GCodes
+    GCodeMotion,
 )
 from .block import Block
 from .line import Line
@@ -17,6 +17,20 @@ from .words import Word
 from .utils import Vector3, Quaternion
 
 from .exceptions import MachineInvalidAxis, MachineInvalidState
+
+from pygcode.dialects import get_default as get_default_dialect
+match get_default_dialect():
+    case 'marlin2':
+        from .gcodes_marlin import (
+            GCodeRelativePositioning as GCodeIncrementalDistanceMode,
+            GCodeInchUnits as GCodeUseInches,
+            GCodeMillimeterUnits as GCodeUseMillimeters,
+        )
+    case _:
+        from .gcodes_legacy import (
+            GCodeIncrementalDistanceMode,
+            GCodeUseInches, GCodeUseMillimeters,
+        )
 
 UNIT_IMPERIAL = GCodeUseInches.unit_id      # G20
 UNIT_METRIC = GCodeUseMillimeters.unit_id   # G21
