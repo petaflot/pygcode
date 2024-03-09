@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 # vim: number ts=4
 """
-    generate src/pygcode/gcode_marlin.py based on official documentation
+    generate src/pygcode/gcode_marlin.py based on MarlinDocumentation
+
+    NOTE: because of a few silly names that are not very explicit and cause collisions,
+        using fork found here: https://github.com/petaflot/MarlinDocumentation
 """
 from string import ascii_letters
 
 class_types = {
-    # unused: GCodeDistanceMode
-    # unused: GCodePathControlMode
-    # unused: GCodeProgramControl
 	'g000': 'GCodeMotion', # LinearMove
 	'g002': 'GCodeArcMove', # GCodeMotion > ArcOrCircleMove
 	'g004': 'GCode', # Dwell

@@ -108,10 +108,10 @@ class GCodeBedLevelingBilinearm2(GCodeMachineRoutines):
 #    param_letters = ""
 #    word_key = Word('G', 29)
 
-class GCodeBedLevelingUnifiedm3(GCodeMachineRoutines):
-    """G29: Probe the bed and enable leveling compensation."""
-    param_letters = "ABCDEFHIJKLPQRSTUVWXY"
-    word_key = Word('G', 29)
+#class GCodeBedLevelingUnifiedm3(GCodeMachineRoutines):
+#    """G29: Probe the bed and enable leveling compensation."""
+#    param_letters = "ABCDEFHIJKLPQRSTUVWXY"
+#    word_key = Word('G', 29)
 
 class GCodeSingleZProbe(GCodeMachineRoutines):
     """G30: Probe bed at current XY location"""
