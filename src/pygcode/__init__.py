@@ -60,7 +60,7 @@ __all__ = [
     'GCodeCannedCycleReturnPrevLevel',
     'GCodeCannedCycleReturnToR',
     'GCodeCannedReturnMode',
-    'GCodeCoolant',
+    'GCodeCoolantHeaters',
     'GCodeCoolantFloodOn',
     'GCodeCoolantMistOn',
     'GCodeCoolantOff',
@@ -143,7 +143,7 @@ __all__ = [
     'GCodeSetPredefinedPosition',
     'GCodeSpeedAndFeedOverrideOff',
     'GCodeSpeedAndFeedOverrideOn',
-    'GCodeSpindle',
+    'GCodeToolState',
     'GCodeSpindleConstantSurfaceSpeedMode',
     'GCodeSpindleRPMMode',
     'GCodeSpindleSpeed',
@@ -157,7 +157,7 @@ __all__ = [
     'GCodeStraightProbe',
     'GCodeThreadingCycle',
     'GCodeToolChange',
-    'GCodeToolLength',
+    'GCodeToolGeometry',
     'GCodeToolLengthOffset',
     'GCodeToolSetCurrent',
     'GCodeUnit',
@@ -212,7 +212,7 @@ match get_default_dialect():
             #         - GCodeCannedReturnMode:
             # G98       - GCodeCannedCycleReturnPrevLevel: G98: Canned Cycle Return to the level set prior to cycle start
             # G99       - GCodeCannedCycleReturnToR: G99: Canned Cycle Return to the level set by R
-            #         - GCodeCoolant:
+            #         - GCodeCoolantHeaters:
             # M08       - GCodeCoolantFloodOn: M8: turn flood coolant on
             # M07       - GCodeCoolantMistOn: M7: turn mist coolant on
             # M09       - GCodeCoolantOff: M9: turn all coolant off
@@ -309,7 +309,7 @@ match get_default_dialect():
             # M60       - GCodePalletChangePause: M60: Pallet Change Pause
             # M00       - GCodePauseProgram: M0: Program Pause
             # M01       - GCodePauseProgramOptional: M1: Program Pause (optional)
-            #         - GCodeSpindle:
+            #         - GCodeToolState:
             # M19       - GCodeOrientSpindle: M19: Orient Spindle
             #           - GCodeSpindleSpeedMode:
             # G96         - GCodeSpindleConstantSurfaceSpeedMode: G96: Spindle Constant Surface Speed
@@ -318,7 +318,7 @@ match get_default_dialect():
             # M04         - GCodeStartSpindleCCW: M4: Start Spindle Counter-Clockwise
             # M03         - GCodeStartSpindleCW: M3: Start Spindle Clockwise
             # M05       - GCodeStopSpindle: M5: Stop Spindle
-            #         - GCodeToolLength:
+            #         - GCodeToolGeometry:
             # G43.2     - GCodeAddToolLengthOffset: G43.2: Appkly Additional Tool Length Offset
             # G49       - GCodeCancelToolLengthOffset: G49: Cancel Tool Length Compensation
             # G43.1     - GCodeDynamicToolLengthOffset: G43.1: Dynamic Tool Length Offset
@@ -347,7 +347,7 @@ match get_default_dialect():
             GCodeCannedCycleReturnPrevLevel,
             GCodeCannedCycleReturnToR,
             GCodeCannedReturnMode,
-            GCodeCoolant,
+            GCodeCoolantHeaters,
             GCodeCoolantFloodOn,
             GCodeCoolantMistOn,
             GCodeCoolantOff,
@@ -430,7 +430,7 @@ match get_default_dialect():
             GCodeSetPredefinedPosition,
             GCodeSpeedAndFeedOverrideOff,
             GCodeSpeedAndFeedOverrideOn,
-            GCodeSpindle,
+            GCodeToolState,
             GCodeSpindleConstantSurfaceSpeedMode,
             GCodeSpindleRPMMode,
             GCodeSpindleSpeed,
@@ -444,7 +444,7 @@ match get_default_dialect():
             GCodeStraightProbe,
             GCodeThreadingCycle,
             GCodeToolChange,
-            GCodeToolLength,
+            GCodeToolGeometry,
             GCodeToolLengthOffset,
             GCodeToolSetCurrent,
             GCodeUnit,

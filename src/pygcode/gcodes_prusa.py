@@ -1,6 +1,6 @@
 from .gcodes_base import *
 
-from .gcodes_legacy import *
+from .gcodes_linuxcnc import *
 
 # ======================= Prusa =======================
 # CODE              PARAMETERS          DESCRIPTION

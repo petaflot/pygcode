@@ -14,6 +14,8 @@ for python.
     pip install -e .
 ```
 
+Make sure you set `_DEFAULT_` to the dialect you want to use in `src/pygcode/dialects/__init__.py`
+
 
 # Documentation
 

@@ -27,7 +27,7 @@ match get_default_dialect():
             GCodeMillimeterUnits as GCodeUseMillimeters,
         )
     case _:
-        from .gcodes_legacy import (
+        from .gcodes_linuxcnc import (
             GCodeIncrementalDistanceMode,
             GCodeUseInches, GCodeUseMillimeters,
         )

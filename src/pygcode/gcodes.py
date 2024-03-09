@@ -1,4 +1,4 @@
-# vim: ts=4, number
+# vim: ts=4 number
 import sys
 from collections import defaultdict
 from copy import copy
@@ -151,7 +151,7 @@ match get_default_dialect():
     case 'prusa':
         from .gcodes_prusa import *
     case _:
-        from .gcodes_legacy import *
+        from .gcodes_linuxcnc import *
 
 # ======================= Utilities =======================
 

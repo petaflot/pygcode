@@ -10,50 +10,50 @@ class_types = {
     # unused: GCodePathControlMode
     # unused: GCodeProgramControl
 	'g000': 'GCodeMotion', # LinearMove
-	'g002': 'GCodeArcMove', # ArcOrCircleMove
+	'g002': 'GCodeArcMove', # GCodeMotion > ArcOrCircleMove
 	'g004': 'GCode', # Dwell
-	'g005': 'GCodeMotion', # BzierCubicSpline
+	'g005': 'GCodeMotion', # BezierCubicSpline
 	'g006': 'GCodeMotion', # DirectStepperMove
-	'g010': 'GCode', # Retract
-	'g011': 'GCode', # Recover
-	'g012': 'GCodeMotion', # CleanTheNozzle
+	'g010': 'GCodeMachineRoutines', # Retract
+	'g011': 'GCodeMachineRoutines', # Recover
+	'g012': 'GCodeMachineRoutines', # CleanTheNozzle
 	'g017': 'GCodePlaneSelect', # CncWorkspacePlanes
 	'g020': 'GCodeUnit', # InchUnits
 	'g021': 'GCodeUnit', # MillimeterUnits
-	'g026': 'GCodeMotion', # MeshValidationPattern
-	'g027': 'GCodeMotion', # ParkToolhead
-	'g028': 'GCodeMotion', # AutoHome
-	'g029': 'GCodeMotion', # BedLeveling
-	'g029g1': 'GCodeMotion', # BedLevelingPoint
-	'g029m2': 'GCodeMotion', # BedLevelingBilinear
-	'g029g2': 'GCodeMotion', # BedLevelingLinear
-	'g029m1': 'GCodeMotion', # BedLevelingManual
-	'g029m3': 'GCodeMotion', # BedLevelingUnified
-	'g030': 'GCodeMotion', # SingleZProbe
-	'g031': 'GCodeMotion', # DockSled
-	'g032': 'GCodeMotion', # UndockSled
-	'g033': 'GCodeMotion', # DeltaAutoCalibration
-	'g034b': 'GCodeMotion', # MechanicalGantryCalibration
-	'g034a': 'GCodeMotion', # ZSteppersAutoAlignment
-	'g035': 'GCodeMotion', # TrammingAssistant
-	'g038': 'GCodeMotion', # ProbeTarget
-	'g042': 'GCodeSelectCoordinateSystem', # MoveToMeshCoordinate
-	'g053': 'GCodeSelectCoordinateSystem', # MoveInMachineCoordinates
+	'g026': 'GCodeAssistedRoutines', # MeshValidationPattern
+	'g027': 'GCodeMachineRoutines', # ParkToolhead
+	'g028': 'GCodeMachineRoutines', # AutoHome
+	'g029': 'GCodeMachineRoutines', # BedLeveling
+	'g029g1': 'GCodeMachineRoutines', # BedLevelingPoint
+	'g029m2': 'GCodeMachineRoutines', # BedLevelingBilinear
+	'g029g2': 'GCodeMachineRoutines', # BedLevelingLinear
+	'g029m1': 'GCodeMachineRoutines', # BedLevelingManual
+	'g029m3': 'GCodeMachineRoutines', # BedLevelingUnified
+	'g030': 'GCodeMachineRoutines', # SingleZProbe
+	'g031': 'GCodeMachineRoutines', # DockSled
+	'g032': 'GCodeMachineRoutines', # UndockSled
+	'g033': 'GCodeMachineRoutines', # DeltaAutoCalibration
+	'g034b': 'GCodeMachineRoutines', # MechanicalGantryCalibration
+	'g034a': 'GCodeMachineRoutines', # ZSteppersAutoAlignment
+	'g035': 'GCodeAssistedRoutines', # TrammingAssistant
+	'g038': 'GCodeMachineRoutines', # ProbeTarget
+	'g042': 'GCodeMotion', # MoveToMeshCoordinate
+	'g053': 'GCodeMotion', # MoveInMachineCoordinates
 	'g054': 'GCodeSelectCoordinateSystem', # WorkspaceCoordinateSystem
-	'g060': 'GCode', # SaveCurrentPosition
+	'g060': 'GCodeOtherModal', # SaveCurrentPosition
 	'g061': 'GCodeMotion', # ReturnToSavedPosition
-	'g076': 'GCodeOtherModal', # ProbeTemperatureCalibration
-	'g080': 'GCode', # CancelCurrentMotionMode
+	'g076': 'GCodeMachineRoutines', # ProbeTemperatureCalibration
+	'g080': 'GCodeOtherModal', # CancelCurrentMotionMode
 	'g090': 'GCodeOtherModal', # AbsolutePositioning
 	'g091': 'GCodeOtherModal', # RelativePositioning
 	'g092': 'GCodeOtherModal', # SetPosition
-	'g425': 'GCodeOtherModal', # BacklashCalibration
-	'm0000': 'GCodeOtherModal', # UnconditionalStop
-	'm0003': 'GCodeSpindle', # SpindleCwLaserOn
-	'm0004': 'GCodeSpindle', # SpindleCcwLaserOn
-	'm0005': 'GCodeSpindle', # SpindleLaserOff
-	'm0007': 'GCodeCoolant', # CoolantControls
-	'm0010': 'GCodeDigitalOutput', # VacuumBlowerControl
+	'g425': 'GCodeMachineRoutines', # BacklashCalibration
+	'm0000': 'GCodeProgramControl', # UnconditionalStop
+	'm0003': 'GCodeToolState', # SpindleCwLaserOn
+	'm0004': 'GCodeToolState', # SpindleCcwLaserOn
+	'm0005': 'GCodeToolState', # SpindleLaserOff
+	'm0007': 'GCodeCoolantHeaters', # CoolantControls
+	'm0010': 'GCodeIO', # VacuumBlowerControl
 	'm0016': 'GCodeOtherModal', # ExpectedPrinterCheck
 	'm0017': 'GCodeOtherModal', # EnableSteppers
 	'm0018': 'GCodeOtherModal', # DisableSteppers
@@ -61,26 +61,26 @@ class_types = {
 	'm0021': 'GCodeIO', # InitSdCard
 	'm0022': 'GCodeIO', # ReleaseSdCard
 	'm0023': 'GCodeIO', # SelectSdFile
-	'm0024': 'GCodeOtherModal', # StartOrResumeSdPrint
-	'm0025': 'GCodeOtherModal', # PauseSdPrint
-	'm0026': 'GCodeIO', # SetSdPosition
-	'm0027': 'GCodeNonModal', # ReportSdPrintStatus
+	'm0024': 'GCodeProgramControl', # StartOrResumeSdPrint
+	'm0025': 'GCodeProgramControl', # PauseSdPrint
+	'm0026': 'GCodeProgramControl', # SetSdPosition
+	'm0027': 'GCodeMachineState', # ReportSdPrintStatus
 	'm0028': 'GCodeIO', # StartSdWrite
 	'm0029': 'GCodeIO', # StopSdWrite
 	'm0030': 'GCodeIO', # DeleteSdFile
-	'm0031': 'GCode', # PrintTime
-	'm0032': 'GCodeIO', # SelectAndStart
+	'm0031': 'GCodeMachineState', # ReportPrintTime
+	'm0032': 'GCodeProgramControl', # SelectAndStart
 	'm0033': 'GCodeIO', # GetLongPath
 	'm0034': 'GCodeIO', # SdcardSorting
-	'm0042': 'GCodeDigitalOutput', # SetPinState
+	'm0042': 'GCodeIO', # SetPinState
 	'm0043': 'GCodeIO', # DebugPins
-	'm0043b': 'GCodeDigitalOutput', # TogglePins
-	'm0048': 'GCodeMotion', # ProbeRepeatabilityTest
-	'm0073': 'GCode', # SetPrintProgress
-	'm0075': 'GCodeOtherModal', # StartPrintJobTimer
-	'm0076': 'GCodeOtherModal', # PausePrintJobTimer
-	'm0077': 'GCodeOtherModal', # StopPrintJobTimer
-	'm0078': 'GCode', # PrintJobStats
+	'm0043b': 'GCodeIO', # TogglePins
+	'm0048': 'GCodeMachineRoutines', # ProbeRepeatabilityTest
+	'm0073': 'GCodeNonModal', # SetPrintProgress
+	'm0075': 'GCodeProgramControl', # StartPrintJobTimer
+	'm0076': 'GCodeProgramControl', # PausePrintJobTimer
+	'm0077': 'GCodeProgramControl', # StopPrintJobTimer
+	'm0078': 'GCodeMachineState', # PrintJobStats
 	'm0080': 'GCodeOtherModal', # PowerOn
 	'm0081': 'GCodeOtherModal', # PowerOff
 	'm0082': 'GCodeOtherModal', # EAbsolute
@@ -88,168 +88,168 @@ class_types = {
 	'm0085': 'GCodeOtherModal', # InactivityShutdown
 	'm0086': 'GCodeOtherModal', # HotendIdleTimeout
 	'm0087': 'GCodeOtherModal', # DisableHotendIdleTimeout
-	'm0092': 'GCodeUnit', # SetAxisStepsPerUnit
-	'm0100': 'GCodeNonModal', # FreeMemory
-	'm0102': 'GCodeOtherModal', # ConfigureBedDistanceSensor
-	'm0104': 'GCodeOtherModal', # SetHotendTemperature
-	'm0105': 'GCodeNonModal', # ReportTemperatures
-	'm0106': 'GCodeDigitalOutput', # SetFanSpeed
-	'm0107': 'GCodeDigitalOutput', # FanOff
-	'm0108': 'GCodeOtherModal', # BreakAndContinue
-	'm0109': 'GCode', # WaitForHotendTemperature
+	'm0092': 'GCodeOtherModal', # SetAxisStepsPerUnit
+	'm0100': 'GCodeMachineState', # FreeMemory
+	'm0102': 'GCodeMachineRoutines', # ConfigureBedDistanceSensor
+	'm0104': 'GCodeToolState', # SetHotendTemperature
+	'm0105': 'GCodeMachineState', # ReportTemperatures
+	'm0106': 'GCodeCoolantHeaters', # SetFanSpeed
+	'm0107': 'GCodeCoolantHeaters', # FanOff
+	'm0108': 'GCodeProgramControl', # BreakAndContinue
+	'm0109': 'GCodeToolState', # WaitForHotendTemperature
 	'm0110': 'GCodeOtherModal', # SetLineNumber
 	'm0111': 'GCodeOtherModal', # DebugLevel
 	'm0112': 'GCodeOtherModal', # FullShutdown
-	'm0113': 'GCode', # HostKeepalive
-	'm0114': 'GCodeNonModal', # GetCurrentPosition
-	'm0115': 'GCodeNonModal', # FirmwareInfo
-	'm0117': 'GCodeIO', # SetLcdMessage
-	'm0118': 'GCodeIO', # SerialPrint
-	'm0119': 'GCodeIO', # EndstopStates
-	'm0120': 'GCodeIO', # EnableEndstops
-	'm0121': 'GCodeIO', # DisableEndstops
-	'm0122': 'GCodeIO', # TmcDebugging
-	'm0123': 'GCodeIO', # FanTachometers
-	'm0125': 'GCodeMotion', # ParkHead
-	'm0126': 'GCodeDigitalOutput', # BaricudaOpen
-	'm0127': 'GCodeDigitalOutput', # BaricudaClose
-	'm0128': 'GCodeDigitalOutput', # BaricudaOpen
-	'm0129': 'GCodeDigitalOutput', # BaricudaClose
-	'm0140': 'GCodeOtherModal', # SetBedTemperature
-	'm0141': 'GCodeOtherModal', # SetChamberTemperature
-	'm0143': 'GCodeCoolant', # SetLaserCoolerTemperature
-	'm0145': 'GCodeOtherModal', # SetMaterialPreset
+	'm0113': 'GCodeMachineState', # HostKeepalive
+	'm0114': 'GCodeMachineState', # GetCurrentPosition
+	'm0115': 'GCodeMachineState', # FirmwareInfo
+	'm0117': 'GCodeMachineState', # SetLcdMessage
+	'm0118': 'GCodeMachineState', # SerialPrint
+	'm0119': 'GCodeMachineState', # EndstopStates
+	'm0120': 'GCodeOtherModal', # EnableEndstops
+	'm0121': 'GCodeOtherModal', # DisableEndstops
+	'm0122': 'GCodeMachineState', # TmcDebugging
+	'm0123': 'GCodeMachineState', # FanTachometers
+	'm0125': 'GCodeMachineRoutines', # ParkHead
+	'm0126': 'GCodeDigitalOutput', # Baricuda1Open
+	'm0127': 'GCodeDigitalOutput', # Baricuda1Close
+	'm0128': 'GCodeDigitalOutput', # Baricuda2Open
+	'm0129': 'GCodeDigitalOutput', # Baricuda2Close
+	'm0140': 'GCodeCoolantHeaters', # SetBedTemperature
+	'm0141': 'GCodeCoolantHeaters', # SetChamberTemperature
+	'm0143': 'GCodeCoolantHeaters', # SetLaserCoolerTemperature
+	'm0145': 'GCodeNonModal', # SetMaterialPreset
 	'm0149': 'GCodeUnit', # SetTemperatureUnits
 	'm0150': 'GCodeDigitalOutput', # SetRgbWColor
 	'm0154': 'GCodeNonModal', # PositionAutoReport
-	'm0155': 'GCodeNonModal', # TemperatureAutoReport
+	'm0155': 'GCodeMachineState', # TemperatureAutoReport
 	'm0163': 'GCodeOtherModal', # SetMixFactor
 	'm0164': 'GCodeOtherModal', # SaveMix
 	'm0165': 'GCodeOtherModal', # SetMix
 	'm0166': 'GCodeOtherModal', # GradientMix
-	'm0190': 'GCode', # WaitForBedTemperature
-	'm0191': 'GCode', # WaitForChamberTemperature
-	'm0192': 'GCode', # WaitForProbeTemperature
-	'm0193': 'GCodeCoolant', # SetLaserCoolerTemperature
+	'm0190': 'GCodeCoolantHeaters', # WaitForBedTemperature
+	'm0191': 'GCodeCoolantHeaters', # WaitForChamberTemperature
+	'm0192': 'GCodeToolState', # WaitForProbeTemperature
+	'm0193': 'GCodeCoolantHeaters', # SetLaserCoolerTemperature
 	'm0200': 'GCodeOtherModal', # SetFilamentDiameter
-	'm0201': 'GCodeNonModal', # PrintTravelMoveLimits
-	'm0203': 'GCodeFeedRateMode', # SetMaxFeedrate
-	'm0204': 'GCodeOtherModal', # SetStartingAcceleration
-	'm0205': 'GCodeOtherModal', # SetAdvancedSettings
-	'm0206': 'GCodeOtherModal', # SetHomeOffsets
-	'm0207': 'GCodeOtherModal', # SetFirmwareRetraction
-	'm0208': 'GCodeOtherModal', # FirmwareRecover
-	'm0209': 'GCodeOtherModal', # SetAutoRetract
+	'm0201': 'GCodePathControlMode', # PrintTravelMoveLimits
+	'm0203': 'GCodePathControlMode', # SetMaxFeedrate
+	'm0204': 'GCodePathControlMode', # SetStartingAcceleration
+	'm0205': 'GCodePathControlMode', # SetAdvancedSettings
+	'm0206': 'GCodeMachineConfig', # SetHomeOffsets
+	'm0207': 'GCodeMachineConfig', # FirmwareRetractionSettings
+	'm0208': 'GCodeMachineConfig', # FirmwareRecoverSettings
+	'm0209': 'GCodeMachineConfig', # SetAutoRetract
 	'm0211': 'GCodeOtherModal', # SoftwareEndstops
-	'm0217': 'GCodeOtherModal', # FilamentSwapParameters
-	'm0218': 'GCodeOtherModal', # SetHotendOffset
+	'm0217': 'GCodeMachineConfig', # FilamentSwapParameters
+	'm0218': 'GCodeToolGeometry', # SetHotendOffset
 	'm0220': 'GCodeFeedRateMode', # SetFeedratePercentage
-	'm0221': 'GCodeOtherModal', # SetFlowPercentage
+	'm0221': 'GCodeFeedRateMode', # SetFlowPercentage
 	'm0226': 'GCodeIO', # WaitForPinState
-	'm0240': 'GCodeIO', # TriggerCamera
-	'm0250': 'GCodeIO', # LcdContrast
-	'm0255': 'GCodeIO', # LcdSleepBacklightTimeout
-	'm0256': 'GCodeIO', # LcdBrightness
-	'm0260': 'GCodeDigitalOutput', # ICSend
-	'm0261': 'GCodeIO', # ICRequest
+	'm0240': 'GCodeDigitalOutput', # TriggerCamera
+	'm0250': 'GCodeDigitalOutput', # LcdContrast
+	'm0255': 'GCodeDigitalOutput', # LcdSleepBacklightTimeout
+	'm0256': 'GCodeDigitalOutput', # LcdBrightness
+	'm0260': 'GCodeIO', # I2CSend
+	'm0261': 'GCodeIO', # I2CRequest
 	'm0280': 'GCodeIO', # ServoPosition
-	'm0281': 'GCodeOtherModal', # EditServoAngles
-	'm0282': 'GCodeOtherModal', # DetachServo
+	'm0281': 'GCodeIO', # EditServoAngles
+	'm0282': 'GCodeIO', # DetachServo
 	'm0290': 'GCodeMotion', # Babystep
 	'm0300': 'GCodeDigitalOutput', # PlayTone
-	'm0301': 'GCodeOtherModal', # SetHotendPid
+	'm0301': 'GCodeMachineConfig', # SetHotendPid
 	'm0302': 'GCodeOtherModal', # ColdExtrude
-	'm0303': 'GCodeOtherModal', # PidAutotune
-	'm0304': 'GCodeOtherModal', # SetBedPid
-	'm0305': 'GCodeOtherModal', # UserThermistorParameters
-	'm0306': 'GCodeOtherModal', # ModelPredictiveTempControl
-	'm0350': 'GCodeOtherModal', # SetMicroStepping
-	'm0351': 'GCodeOtherModal', # SetMicrostepPins
+	'm0303': 'GCodeCalibrationRoutines', # PidAutotune
+	'm0304': 'GCodeMachineConfig', # SetBedPid
+	'm0305': 'GCodeMachineConfig', # UserThermistorParameters
+	'm0306': 'GCodeMachineConfig', # ModelPredictiveTempControl
+	'm0350': 'GCodeMachineConfig', # SetMicroStepping
+	'm0351': 'GCodeMachineConfig', # SetMicrostepPins
 	'm0355': 'GCodeDigitalOutput', # CaseLightControl
-	'm0360': 'GCodeMotion', # ScaraThetaA
-	'm0361': 'GCodeMotion', # ScaraThetaB
-	'm0362': 'GCodeMotion', # ScaraPsiA
-	'm0363': 'GCodeMotion', # ScaraPsiB
-	'm0364': 'GCodeMotion', # ScaraPsiC
+	'm0360': 'GCodeCalibrationRoutines', # ScaraThetaA
+	'm0361': 'GCodeCalibrationRoutines', # ScaraThetaB
+	'm0362': 'GCodeCalibrationRoutines', # ScaraPsiA
+	'm0363': 'GCodeCalibrationRoutines', # ScaraPsiB
+	'm0364': 'GCodeCalibrationRoutines', # ScaraPsiC
 	'm0380': 'GCodeDigitalOutput', # ActivateSolenoid
 	'm0381': 'GCodeDigitalOutput', # DeactivateSolenoids
-	'm0400': 'GCodeOtherModal', # FinishMoves
+	'm0400': 'GCodeNonModal', # FinishMoves
 	'm0401': 'GCodeDigitalOutput', # DeployProbe
 	'm0402': 'GCodeDigitalOutput', # StowProbe
-	'm0403': 'GCodeOtherModal', # MmuFilamentType
-	'm0404': 'GCodeOtherModal', # SetFilamentDiameter
-	'm0405': 'GCodeOtherModal', # FilamentWidthSensorOn
-	'm0406': 'GCodeOtherModal', # FilamentWidthSensorOff
-	'm0407': 'GCodeNonModal', # FilamentWidth
-	'm0410': 'GCodeOtherModal', # Quickstop
-	'm0412': 'GCodeOtherModal', # FilamentRunout
-	'm0413': 'GCodeOtherModal', # PowerLossRecovery
-	'm0420': 'GCodeNonModal', # BedLevelingState
-	'm0421': 'GCodeOtherModal', # SetMeshValue
-	'm0422': 'GCodeOtherModal', # SetZMotorXy
-	'm0423': 'GCodeOtherModal', # XTwistCompensation
-	'm0425': 'GCodeOtherModal', # BacklashCompensation
-	'm0428': 'GCodeOtherModal', # HomeOffsetsHere
-	'm0430': 'GCodeOtherModal', # PowerMonitor
-	'm0486': 'GCodeOtherModal', # CancelObjects
-	'm0493': 'GCodeOtherModal', # FixedTimeMotion
-	'm0500': 'GCodeNonModal', # SaveSettings
-	'm0501': 'GCodeOtherModal', # RestoreSettings
-	'm0502': 'GCodeOtherModal', # FactoryReset
-	'm0503': 'GCodeNonModal', # ReportSettings
+	'm0403': 'GCodeMachineConfig', # Mmu2FilamentType
+	'm0404': 'GCodeMachineConfig', # SetFilamentDiameter
+	'm0405': 'GCodeMachineConfig', # FilamentWidthSensorOn
+	'm0406': 'GCodeMachineConfig', # FilamentWidthSensorOff
+	'm0407': 'GCodeMachineConfig', # FilamentWidth
+	'm0410': 'GCodeProgramControl', # Quickstop
+	'm0412': 'GCodeMachineConfig', # FilamentRunout
+	'm0413': 'GCodeMachineConfig', # PowerLossRecovery
+	'm0420': 'GCodeMachineConfig', # BedLevelingState
+	'm0421': 'GCodeMachineConfig', # SetMeshValue
+	'm0422': 'GCodeMachineConfig', # SetZMotorXy
+	'm0423': 'GCodeMachineConfig', # XTwistCompensation
+	'm0425': 'GCodeMachineConfig', # BacklashCompensation
+	'm0428': 'GCodeMachineConfig', # HomeOffsetsHere
+	'm0430': 'GCodeNonModal', # PowerMonitor
+	'm0486': 'GCodeProgramControl', # CancelObjects
+	'm0493': 'GCodePathControlMode', # FixedTimeMotion
+	'm0500': 'GCodeMachineConfig', # SaveSettings
+	'm0501': 'GCodeMachineConfig', # RestoreSettings
+	'm0502': 'GCodeMachineConfig', # FactoryReset
+	'm0503': 'GCodeMachineConfig', # ReportSettings
 	'm0504': 'GCodeNonModal', # ValidateEepromContents
 	'm0510': 'GCodeOtherModal', # LockMachine
 	'm0511': 'GCodeOtherModal', # UnlockMachine
-	'm0512': 'GCodeNonModal', # SetPasscode
-	'm0524': 'GCodeOtherModal', # AbortSdPrint
-	'm0540': 'GCodeNonModal', # EndstopsAbortSd
-	'm0569': 'GCodeOtherModal', # SetTmcSteppingMode
-	'm0575': 'GCodeOtherModal', # SerialBaudRate
-	'm0592': 'GCodeOtherModal', # NonlinearExtrusionControl
-	'm0593': 'GCodeOtherModal', # ZvInputShaping
-	'm0600': 'GCode', # FilamentChange
-	'm0603': 'GCodeOtherModal', # ConfigureFilamentChange
-	'm0605': 'GCodeOtherModal', # MultiNozzleMode
-	'm0665': 'GCodeOtherModal', # DeltaConfiguration
-	'm0665b': 'GCodeOtherModal', # ScaraConfiguration
-	'm0666b': 'GCodeOtherModal', # SetDualEndstopOffsets
-	'm0666a': 'GCodeOtherModal', # SetDeltaEndstopAdjustments
-	'm0672': 'GCodeOtherModal', # DuetSmartEffectorSensitivity
-	'm0701': 'GCodeOtherModal', # LoadFilament
-	'm0702': 'GCodeOtherModal', # UnloadFilament
-	'm0710': 'GCodeOtherModal', # ControllerFanSettings
-	'm7219': 'GCodeDigitalOutput', # MaxControl
-	'm0808': 'GCodeOtherModal', # RepeatMarker
-	'm0810': 'GCodeOtherModal', # GCodeMacros
-	'm0851': 'GCodeOtherModal', # XyzProbeOffset
-	'm0852': 'GCodeOtherModal', # BedSkewCompensation
-	'm0860': 'GCodeOtherModal', # ICPositionEncoders
-	'm0871': 'GCodeOtherModal', # ProbeTemperatureConfig
-	'm0876': 'GCode', # HandlePromptResponse
-	'm0900': 'GCodeOtherModal', # LinearAdvanceFactor
-	'm0906': 'GCodeOtherModal', # StepperMotorCurrent
-	'm0907': 'GCodeOtherModal', # SetMotorCurrent
-	'm0908': 'GCodeOtherModal', # SetTrimpotPins
-	'm0909': 'GCodeNonModal', # DacPrintValues
-	'm0910': 'GCodeNonModal', # CommitDacToEeprom
-	'm0911': 'GCode', # TmcOtPreWarnCondition
-	'm0912': 'GCode', # ClearTmcOtPreWarn
-	'm0913': 'GCodeOtherModal', # SetHybridThresholdSpeed
-	'm0914': 'GCodeOtherModal', # TmcBumpSensitivity
-	'm0915': 'GCode', # TmcZAxisCalibration
-	'm0916': 'GCode', # LThermalWarningTest
-	'm0917': 'GCode', # LOvercurrentWarningTest
-	'm0918': 'GCode', # LSpeedWarningTest
-	'm0919': 'GCodeOtherModal', # TmcChopperTiming
+	'm0512': 'GCodeMachineConfig', # SetPasscode
+	'm0524': 'GCodeProgramControl', # AbortSdPrint
+	'm0540': 'GCodeMachineConfig', # EndstopsAbortSd
+	'm0569': 'GCodeMachineConfig', # SetTmcSteppingMode
+	'm0575': 'GCodeMachineConfig', # SerialBaudRate
+	'm0592': 'GCodeMachineConfig', # NonlinearExtrusionControl
+	'm0593': 'GCodeCalibrationRoutines', # ZvInputShaping
+	'm0600': 'GCodeMachineRoutines', # FilamentChange
+	'm0603': 'GCodeMachineConfig', # ConfigureFilamentChange
+	'm0605': 'GCodeMachineConfig', # MultiNozzleMode
+	'm0665': 'GCodeMachineConfig', # DeltaConfiguration
+	'm0665b': 'GCodeMachineConfig', # ScaraConfiguration
+	'm0666b': 'GCodeMachineConfig', # SetDualEndstopOffsets
+	'm0666a': 'GCodeMachineConfig', # SetDeltaEndstopAdjustments
+	'm0672': 'GCodeMachineConfig', # DuetSmartEffectorSensitivity
+	'm0701': 'GCodeMachineRoutines', # LoadFilament
+	'm0702': 'GCodeMachineRoutines', # UnloadFilament
+	'm0710': 'GCodeMachineConfig', # ControllerFanSettings
+	'm7219': 'GCodeDigitalOutput', # MAX7219Control
+	'm0808': 'GCodeProgramControl', # RepeatMarker
+	'm0810': 'GCodeProgramControl', # GCodeMacros
+	'm0851': 'GCodeToolGeometry', # XyzProbeOffset
+	'm0852': 'GCodeMachineConfig', # BedSkewCompensation
+	'm0860': 'GCodeMachineConfig', # I2CPositionEncoders
+	'm0871': 'GCodeMachineConfig', # ProbeTemperatureConfig
+	'm0876': 'GCodeMachineConfig', # HandlePromptResponse
+	'm0900': 'GCodeMachineConfig', # LinearAdvanceFactor
+	'm0906': 'GCodeMachineConfig', # TrinamicStepperMotorCurrent
+	'm0907': 'GCodeMachineConfig', # TrimpotStepperMotorCurrent
+	'm0908': 'GCodeMachineConfig', # SetTrimpotPins
+	'm0909': 'GCodeMachineState', # ReportDacStepperCurrent
+	'm0910': 'GCodeMachineState', # CommitDacToEeprom
+	'm0911': 'GCodeMachineState', # TmcOtPreWarnCondition
+	'm0912': 'GCodeMachineState', # ClearTmcOtPreWarn
+	'm0913': 'GCodeMachineConfig', # SetHybridThresholdSpeed
+	'm0914': 'GCodeMachineConfig', # TmcBumpSensitivity
+	'm0915': 'GCodeCalibrationRoutines', # TmcZAxisCalibration
+	'm0916': 'GCodeCalibrationRoutines', # L6474ThermalWarningTest
+	'm0917': 'GCodeCalibrationRoutines', # L6474OvercurrentWarningTest
+	'm0918': 'GCodeCalibrationRoutines', # L6474SpeedWarningTest
+	'm0919': 'GCodeMachineConfig', # TmcChopperTiming
 	'm0928': 'GCodeIO', # StartSdLogging
-	'm0951': 'GCodeOtherModal', # MagneticParkingExtruder
+	'm0951': 'GCodeMachineConfig', # MagneticParkingExtruder
 	'm0993': 'GCodeIO', # BackUpFlashSettingsToSd
 	'm0994': 'GCodeIO', # RestoreFlashFromSd
 	'm0995': 'GCodeIO', # TouchScreenCalibration
-	'm0997': 'GCode', # FirmwareUpdate
+	'm0997': 'GCodeMachineConfig', # FirmwareUpdate
 	'm0999': 'GCodeOtherModal', # StopRestart
 	't0000': 'GCodeOtherModal', # SelectOrReportTool
-	't0001': 'GCode', # MmuSpecialCommands
+	't0001': 'GCodeOtherModal', # MmuSpecialCommands
 }
 
 extra_attributes = {
@@ -257,8 +257,13 @@ extra_attributes = {
     'g021': ['unit_id = 1'], # MillimeterUnits
 }
 
+valid_chars = ascii_letters + '_' + ''.join(str(i) for i in range(10))
+
 def sanitize(string):
-    return ''.join([char if char in ascii_letters else '' for char in string])
+    """ clean a string so it's suitable to act as a class name
+    NOTE: does not replace accented characters by their closest equivalent """
+    x = lambda w: w[0].upper() + w[1:]
+    return ''.join([char if char in valid_chars else '' for char in ''.join([x(word) for word in string.split(' ')])])
 
 def code_val(string):
     try:
@@ -291,7 +296,7 @@ def extract_data(filename):
                 code = int(code)
             elif line.startswith('title: '):
                 title = line[7:].rstrip()
-                class_name = sanitize(title.title())
+                class_name = sanitize(title)
             elif line.startswith('codes: '):
                 codes = line[8:-2].replace(' ','').split(',')
             elif line.startswith('brief: '):
@@ -305,7 +310,6 @@ def extract_data(filename):
     out += f'''class {comment}GCode{class_name}{name_suffix}({class_types[tag]}):
     """{', '.join(codes)}: {brief}"""
     param_letters = "{''.join(param_letters)}"
-    dialects = ['marlin2']
 '''
 
     if len(codes) > 1:
@@ -333,7 +337,7 @@ if __name__ == '__main__':
     all_classes = []
 
     print("# DO NOT EDIT - file generated with pygcode/src/pygcode/tools/marlin_parse_MarlinDocumentation.py\nfrom .gcodes_base import *\n")
-    print("# TODO: manual changes have been made! see pygcode/src/pygcode/gcode_marlin.patch", file=stderr)
+    print("# NOTE: it is likely manual changes have been made to the previous output! see pygcode/src/pygcode/gcode_marlin.patch", file=stderr)
 
     for filename in argv[1:]:
         name, body = extract_data(filename)

@@ -1,7 +1,20 @@
 from .gcodes import MODAL_GROUP_MAP
 from .words import Word, text2words
+import six
+
+"""
+    These class types can be used by external programs to classify the type of instructions
+    see class comments and marlin_gcode.py for examples.
+
+    The granularity of the class naming, while it has no functional use while parsing, can however
+    be useful when it will come to translating from one dialect to another.
+
+    When unsure what class a command should be a (semantic) subclass off, we try to keeps together
+    things that are related to each other (ie. SD card stuff)
+"""
 
 class GCode(object):
+    """ base gcode class ; prefer not to use it """
     # Defining Word
     word_key = None # Word instance to use in lookup
     word_matches = None # function (secondary)
@@ -254,6 +267,8 @@ class GCodeProgramName(GCodeDefinition):
 
 # ======================= Motion =======================
 class GCodeMotion(GCode):
+    """ any command that will move the machine and has XYZ... parameters attached
+        ie. the host is able to kow the machine position after such a command """
     param_letters = set('XYZABCUVW')
     modal_group = MODAL_GROUP_MAP['motion']
     exec_order = 242
@@ -315,32 +330,42 @@ class GCodeCannedCycle(GCode):
                 machine.move_to(**moveto_coords)
 
 
+# ======================= Return Mode in Canned Cycles =======================
+class GCodeCannedReturnMode(GCode):
+    modal_group = MODAL_GROUP_MAP['canned_cycles_return']
+    exec_order = 220
+
+
 # ======================= Distance Mode =======================
 class GCodeDistanceMode(GCode):
+    """ for points of reference to use, and things such as working by radius or diameter (somewhat modal) """
     exec_order = 210
 
 
 # ======================= Feed Rate Mode =======================
 class GCodeFeedRateMode(GCode):
+    """ how feedrates will be interpreted """
     modal_group = MODAL_GROUP_MAP['feed_rate_mode']
     exec_order = 30
 
 
-# ======================= Spindle Control =======================
-class GCodeSpindle(GCode):
+# ======================= Spindle/Tool Control =======================
+class GCodeToolState(GCode):
     word_letter = 'M'
     exec_order = 90
 
 
-# ======================= Coolant =======================
-class GCodeCoolant(GCode):
+# ======================= Coolant & Heaters =======================
+class GCodeCoolantHeaters(GCode):
+    """ all cooling, heating and ventilation systems EXCEPT nozzle temperatures (see GCodeToolState) """
     word_letter = 'M'
     modal_group = MODAL_GROUP_MAP['coolant']
     exec_order = 110
 
 
-# ======================= Tool Length =======================
-class GCodeToolLength(GCode):
+# ======================= Tool Geometry =======================
+class GCodeToolGeometry(GCode):
+    """ tool lengths and offsets """
     modal_group = MODAL_GROUP_MAP['tool_length_offset']
     exec_order = 180
 
@@ -353,6 +378,7 @@ class GCodeProgramControl(GCode):
 
 # ======================= Units =======================
 class GCodeUnit(GCode):
+    """ selects a unit system (somewhat modal) """
     modal_group = MODAL_GROUP_MAP['units']
     exec_order = 160
 
@@ -381,20 +407,16 @@ class GCodePlaneSelect(GCode):
     normal = None  # Vector3
 
 # ======================= Cutter Radius Compensation =======================
-class GCodeCutterRadiusComp(GCode):
+class GCodeCutterRadiusComp(GCodeToolGeometry):
     modal_group = MODAL_GROUP_MAP['cutter_diameter_comp']
     exec_order = 170
 
 # ======================= Path Control Mode =======================
 class GCodePathControlMode(GCode):
+    """ codes that will affect the path and motion either by allowing greater deviation
+    from the theoretical path or by inducing greater deviation (includes acceleration and jerk)"""
     modal_group = MODAL_GROUP_MAP['control_mode']
     exec_order = 200
-
-# ======================= Return Mode in Canned Cycles =======================
-class GCodeCannedReturnMode(GCode):
-    modal_group = MODAL_GROUP_MAP['canned_cycles_return']
-    exec_order = 220
-
 
 # ======================= Other Modal Codes =======================
 class GCodeOtherModal(GCode):
@@ -410,6 +432,7 @@ class GCodeSelectCoordinateSystem(GCodeOtherModal):
 
 # ======================= Flow-control Codes =======================
 class GCodeIO(GCode):
+    """ pretty much anything that reads and writes on digital pins and not related to motion and temperatures """
     word_letter = 'M'
     exec_order = 70
 
@@ -424,3 +447,18 @@ class GCodeNonModal(GCode):
     pass
 
 
+# ======================= Machine Configuration and Calibration Codes =======================
+class GCodeMachineRoutines(GCode):
+    """ standard routines that WILL induce movement such as homing, tool changes.. """
+
+class GCodeAssistedRoutines(GCodeMachineRoutines):
+    """ machine routines that require user intervention """
+
+class GCodeCalibrationRoutines(GCode):
+    """ machine routines that are used for calibration purposes """
+
+class GCodeMachineConfig(GCode):
+    """ configuration parameters that will not significantly alter the machine behaviour """
+
+class GCodeMachineState(GCode):
+    """ mostly for commands that report the machine state to the host """

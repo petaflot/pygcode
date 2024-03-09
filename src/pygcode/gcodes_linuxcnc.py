@@ -237,7 +237,7 @@ class GCodeUnitsPerRevolution(GCodeFeedRateMode):
 # M19                                   Orient Spindle
 # G96, G97          S D                 Spindle Control Mode
 
-class GCodeStartSpindle(GCodeSpindle):
+class GCodeStartSpindle(GCodeToolState):
     """M3,M4: Start Spindle Clockwise"""
     modal_group = MODAL_GROUP_MAP['spindle']
 
@@ -253,19 +253,19 @@ class GCodeStartSpindleCCW(GCodeStartSpindle):
     word_key = Word('M', 4)
 
 
-class GCodeStopSpindle(GCodeSpindle):
+class GCodeStopSpindle(GCodeToolState):
     """M5: Stop Spindle"""
     #param_letters = set('S')  # S is it's own gcode, makes no sense to be here
     word_key = Word('M', 5)
     modal_group = MODAL_GROUP_MAP['spindle']
 
 
-class GCodeOrientSpindle(GCodeSpindle):
+class GCodeOrientSpindle(GCodeToolState):
     """M19: Orient Spindle"""
     word_key = Word('M', 19)
 
 
-class GCodeSpindleSpeedMode(GCodeSpindle):
+class GCodeSpindleSpeedMode(GCodeToolState):
     word_letter = 'G'
     modal_group = MODAL_GROUP_MAP['spindle_speed_mode']
 
@@ -287,17 +287,17 @@ class GCodeSpindleRPMMode(GCodeSpindleSpeedMode):
 # CODE              PARAMETERS          DESCRIPTION
 # M7, M8, M9                            Coolant Control
 
-class GCodeCoolantMistOn(GCodeCoolant):
+class GCodeCoolantMistOn(GCodeCoolantHeaters):
     """M7: turn mist coolant on"""
     word_key = Word('M', 7)
 
 
-class GCodeCoolantFloodOn(GCodeCoolant):
+class GCodeCoolantFloodOn(GCodeCoolantHeaters):
     """M8: turn flood coolant on"""
     word_key = Word('M', 8)
 
 
-class GCodeCoolantOff(GCodeCoolant):
+class GCodeCoolantOff(GCodeCoolantHeaters):
     """M9: turn all coolant off"""
     word_key = Word('M', 9)
 
@@ -309,24 +309,24 @@ class GCodeCoolantOff(GCodeCoolant):
 # G43.2             H                   Apply additional Tool Length Offset
 # G49                                   Cancel Tool Length Compensation
 
-class GCodeToolLengthOffset(GCodeToolLength):
+class GCodeToolLengthOffset(GCodeToolGeometry):
     """G43: Tool Length Offset"""
     param_letters = set('H')
     word_key = Word('G', 43)
 
 
-class GCodeDynamicToolLengthOffset(GCodeToolLength):
+class GCodeDynamicToolLengthOffset(GCodeToolGeometry):
     """G43.1: Dynamic Tool Length Offset"""
     word_key = Word('G', 43.1)
 
 
-class GCodeAddToolLengthOffset(GCodeToolLength):
+class GCodeAddToolLengthOffset(GCodeToolGeometry):
     """G43.2: Appkly Additional Tool Length Offset"""
     param_letters = set('H')
     word_key = Word('G', 43.2)
 
 
-class GCodeCancelToolLengthOffset(GCodeToolLength):
+class GCodeCancelToolLengthOffset(GCodeToolGeometry):
     """G49: Cancel Tool Length Compensation"""
     word_key = Word('G', 49)
 
