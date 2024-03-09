@@ -8,7 +8,7 @@
 > #    """G29: Probe the bed and enable leveling compensation."""
 > #    param_letters = "ACOQEDJV"
 > #    word_key = Word('G', 29)
-96,109c96,109
+96,114c96,114
 < class GCodeBedLevelingLinearg2(GCodeMachineRoutines):
 <     """G29: Probe the bed and enable leveling compensation."""
 <     param_letters = "ACOQXYPSEDTHFBLRJV"
@@ -22,6 +22,11 @@
 < class GCodeBedLeveling(GCodeMachineRoutines):
 <     """G29: Probe the bed and enable leveling compensation"""
 <     param_letters = ""
+<     word_key = Word('G', 29)
+< 
+< class GCodeBedLevelingUnifiedm3(GCodeMachineRoutines):
+<     """G29: Probe the bed and enable leveling compensation."""
+<     param_letters = "ABCDEFHIJKLPQRSTUVWXY"
 <     word_key = Word('G', 29)
 ---
 > #class GCodeBedLevelingLinearg2(GCodeMachineRoutines):
@@ -38,6 +43,11 @@
 > #    """G29: Probe the bed and enable leveling compensation"""
 > #    param_letters = ""
 > #    word_key = Word('G', 29)
+> 
+> #class GCodeBedLevelingUnifiedm3(GCodeMachineRoutines):
+> #    """G29: Probe the bed and enable leveling compensation."""
+> #    param_letters = "ABCDEFHIJKLPQRSTUVWXY"
+> #    word_key = Word('G', 29)
 136,139c136,139
 < class GCodeMechanicalGantryCalibrationb(GCodeMachineRoutines):
 <     """G34: Modern replacement for Průša's TMC_Z_CALIBRATION"""
@@ -48,7 +58,16 @@
 > #    """G34: Modern replacement for Průša's TMC_Z_CALIBRATION"""
 > #    param_letters = "SZ"
 > #    word_key = Word('G', 34)
-1045,1048c1045,1048
+362,367c362
+<     param_letters = "PWETSI"
+<     word_key = Word('M', 43)
+< 
+< class GCodeTogglePinsb(GCodeIO):
+<     """M43T: Toggle pins states"""
+<     param_letters = "SLIRW"
+---
+>     param_letters = "PWETSIRL"
+1045,1048c1040,1043
 < class GCodeDeltaConfiguration(GCodeMachineConfig):
 <     """M665: Set delta geometry values"""
 <     param_letters = "HLRSXYZABC"
@@ -58,7 +77,7 @@
 > #    """M665: Set delta geometry values"""
 > #    param_letters = "HLRSXYZABC"
 > #    word_key = Word('M', 665)
-1060,1063c1060,1063
+1060,1063c1055,1058
 < class GCodeSetDeltaEndstopAdjustmentsa(GCodeMachineConfig):
 <     """M666: Set Delta endstop adjustments"""
 <     param_letters = "XYZ"

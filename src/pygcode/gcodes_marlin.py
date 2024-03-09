@@ -108,10 +108,10 @@ class GCodeBedLevelingBilinearm2(GCodeMachineRoutines):
 #    param_letters = ""
 #    word_key = Word('G', 29)
 
-class GCodeBedLevelingUnifiedm3(GCodeMachineRoutines):
-    """G29: Probe the bed and enable leveling compensation."""
-    param_letters = "ABCDEFHIJKLPQRSTUVWXY"
-    word_key = Word('G', 29)
+#class GCodeBedLevelingUnifiedm3(GCodeMachineRoutines):
+#    """G29: Probe the bed and enable leveling compensation."""
+#    param_letters = "ABCDEFHIJKLPQRSTUVWXY"
+#    word_key = Word('G', 29)
 
 class GCodeSingleZProbe(GCodeMachineRoutines):
     """G30: Probe bed at current XY location"""
@@ -359,12 +359,7 @@ class GCodeSetPinState(GCodeIO):
 
 class GCodeDebugPins(GCodeIO):
     """M43: Get information about pins ; set/get pins states"""
-    param_letters = "PWETSI"
-    word_key = Word('M', 43)
-
-class GCodeTogglePinsb(GCodeIO):
-    """M43T: Toggle pins states"""
-    param_letters = "SLIRW"
+    param_letters = "PWETSIRL"
     word_key = Word('M', 43)
 
 class GCodeProbeRepeatabilityTest(GCodeMachineRoutines):
